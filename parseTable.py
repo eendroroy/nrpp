@@ -20,7 +20,8 @@ class ParseTable(object):
         self.__terminalList = self.__grammarObj.get_terminals()
         self.__parseTable = [{'variable': "", 'terminal': "", 'product': [[]]}]
 
-    def __removeDuplicate(self, _list):
+    @staticmethod
+    def __remove_duplicate(_list):
         temp = [{}]
         for i in _list:
             if not temp.__contains__(i):
@@ -28,19 +29,19 @@ class ParseTable(object):
         temp.remove({})
         return temp
 
-    def getFollowObj(self):
+    def get_follow_object(self):
         return self.__followObj
 
-    def getFirstObj(self):
+    def get_first_object(self):
         return self.__firstObj
 
-    def getGrammarObj(self):
+    def get_grammar_object(self):
         return self.__grammarObj
 
-    def getParseTable(self):
+    def get_parse_table(self):
         return self.__parseTable
 
-    def generateParseTable(self):
+    def generate_parse_table(self):
         """
         """
         rules = self.__grammarObj.get_grammar_list()
@@ -57,22 +58,22 @@ class ParseTable(object):
                     self.__parseTable.append(
                         {'variable': eachRule.get('variable'), 'terminal': each, 'product': eachRule.get('product')})
 
-        self.__parseTable = self.__removeDuplicate(self.__parseTable)
+        self.__parseTable = self.__remove_duplicate(self.__parseTable)
         self.__parseTable.remove({'variable': "", 'terminal': "", 'product': [[]]})
 
         return self
 
-    def printParseTable(self):
+    def print_parse_table(self):
         for each in self.__parseTable:
             print (each)
         return self
 
-    def printToFile(self):
-        OUTPUT = open("parseTable.txt", "w+")
+    def print_to_file(self):
+        output = open("parseTable.txt", "w+")
         _list = self.__terminalList
         _list.append("$")
         for eachV in self.__variableList:
-            OUTPUT.write("-------------------------------------------------------\n" + eachV + "\n")
+            output.write("-------------------------------------------------------\n" + eachV + "\n")
 
             for eachT in _list:
                 for eachR in self.__parseTable:
@@ -80,12 +81,12 @@ class ParseTable(object):
                         continue
                     if not eachR.get('terminal') == eachT:
                         continue
-                    OUTPUT.write("\t\t-----------------------------------------------\n\t\t->" + eachT + "\n\t\t\t\t ")
+                    output.write("\t\t-----------------------------------------------\n\t\t->" + eachT + "\n\t\t\t\t ")
                     for eachS in eachR.get('product'):
-                        OUTPUT.write(eachS + " ")
-                    OUTPUT.write("\n")
-        OUTPUT.write("-------------------------------------------------------")
-        OUTPUT.close()
+                        output.write(eachS + " ")
+                    output.write("\n")
+        output.write("-------------------------------------------------------")
+        output.close()
 
 
 fl = Follow()
@@ -105,5 +106,5 @@ fl.print_follow_list()
 print
 print
 
-ParseTable().generateParseTable().printParseTable()
-ParseTable().generateParseTable().printToFile()
+ParseTable().generate_parse_table().print_parse_table()
+ParseTable().generate_parse_table().print_to_file()
