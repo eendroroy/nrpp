@@ -2,7 +2,7 @@
 """
 xxx
 """
-__author__ = 'indrajit'
+__author__ = 'eendro'
 
 from Follow import Follow
 

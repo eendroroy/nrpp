@@ -2,7 +2,7 @@
 """
 Follow class
 """
-__author__ = 'indrajit'
+__author__ = 'eendro'
 
 from Grammar import Grammar
 from First import First
